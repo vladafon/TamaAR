@@ -16,11 +16,11 @@ namespace Assets.Flower
 
         [SerializeField]
         [Range(0, 100)]
-        private int _changeNumber = 25;
+        private int _stepOfStateChanging = 25;
 
         [SerializeField]
         [Range(0, 100)]
-        private int _criticalNumber = 25;
+        private int _lowerBorderOfNeutralState = 25;
 
         [SerializeField]
         [Range(2, 500)]
@@ -47,8 +47,8 @@ namespace Assets.Flower
 
         private bool _isDead;
 
-        public int CriticalNumber => _criticalNumber;
-        public int ChangeNumber => _changeNumber;
+        public int CriticalNumber => _lowerBorderOfNeutralState;
+        public int ChangeNumber => _stepOfStateChanging;
 
         public bool IsDead => _isDead;
 
@@ -102,15 +102,15 @@ namespace Assets.Flower
                 _isInCriticalState = false;
             }
 
-            if ((_thirsty < _criticalNumber
-                 || _love < _criticalNumber) && _isInBadState == false)
+            if ((_thirsty < _lowerBorderOfNeutralState
+                 || _love < _lowerBorderOfNeutralState) && _isInBadState == false)
             {
                 _animator.SetBool("BadStateBool", true);
                 _isInBadState = true;
             }
 
-            if ((_thirsty >= _criticalNumber
-                 && _love >= _criticalNumber) && _isInBadState)
+            if ((_thirsty >= _lowerBorderOfNeutralState
+                 && _love >= _lowerBorderOfNeutralState) && _isInBadState)
             {
                 _animator.SetBool("BadStateBool", false);
                 _isInBadState = false;
@@ -160,7 +160,7 @@ namespace Assets.Flower
 
             _animator.SetTrigger("WateringTrigger");
 
-            _thirsty += _changeNumber;
+            _thirsty += _stepOfStateChanging;
 
             if (_thirsty > 100)
             {
@@ -180,7 +180,7 @@ namespace Assets.Flower
 
             _animator.SetTrigger("PettingTrigger");
 
-            _love += _changeNumber;
+            _love += _stepOfStateChanging;
 
             if (_love > 100)
             {
@@ -200,7 +200,7 @@ namespace Assets.Flower
 
             _animator.SetTrigger("HealingTrigger");
 
-            _health += _changeNumber * 2;
+            _health += _stepOfStateChanging * 2;
 
             if (_health > 100)
             {
@@ -216,7 +216,7 @@ namespace Assets.Flower
             {
                 return;
             }
-            _thirsty -= _changeNumber;
+            _thirsty -= _stepOfStateChanging;
 
             if (_thirsty < 0)
             {
@@ -233,7 +233,7 @@ namespace Assets.Flower
                 return;
             }
 
-            _love -= _changeNumber;
+            _love -= _stepOfStateChanging;
 
             if (_love < 0)
             {
@@ -250,7 +250,7 @@ namespace Assets.Flower
                 return;
             }
 
-            _health -= _changeNumber / 2;
+            _health -= _stepOfStateChanging / 2;
 
             if (_health < 0)
             {
