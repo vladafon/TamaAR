@@ -81,7 +81,7 @@ namespace Assets.Flower
             if (_isDead && _isInDeadState == false)
             {
                 _animator.SetBool("DeadStateBool", true);
-                _isInDeadState = truFie;
+                _isInDeadState = true;
             }
 
             if (_isDead == false && _isInDeadState)
